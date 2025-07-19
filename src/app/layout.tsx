@@ -1,6 +1,11 @@
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
+import NuqsProvider from "@/providers/NuqsProvider";
+import TokenProvider from "@/providers/TokenProvider";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ReactQueryProvider>
+          <NuqsProvider>
+            <NextAuthProvider>
+              <TokenProvider>{children}</TokenProvider>
+            </NextAuthProvider>
+          </NuqsProvider>
+        </ReactQueryProvider>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );
